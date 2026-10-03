@@ -1,0 +1,74 @@
+// Prisma schema — https://pris.ly/d/prisma-schema
+//
+// Prisma v7 notes:
+//   - `generator client` uses the `prisma-client` provider (Rust-free) and
+//     REQUIRES an explicit `output`. The client is imported from
+//     `@/generated/prisma/client`, not `@prisma/client`.
+//   - `datasource.url` no longer lives here — it is configured in
+//     `prisma.config.ts`.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ═══════════════════════════════════════
+// AUTH / RBAC
+// ═══════════════════════════════════════
+
+model Role {
+  id        String    @id @default(cuid())
+  code      String    @unique
+  name      String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+  users     User[]
+
+  @@map("roles")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  roleId    String
+  username  String?   @unique
+  email     String    @unique
+  password  String?
+  fullname  String    @default("")
+  phone     String?
+  city      String?
+  province  String?
+  avatar    String?
+  isActive  Boolean   @default(true)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  role      Role      @relation(fields: [roleId], references: [id])
+
+  @@map("users")
+}
+
+// ═══════════════════════════════════════
+// QUEUE — background job audit log (source of truth for the recovery poller)
+// ═══════════════════════════════════════
+
+model QueueJob {
+  id          String    @id @default(cuid())
+  type        String
+  payload     Json
+  status      String    @default("pending") // pending | processing | completed | failed
+  attempts    Int       @default(0)
+  maxAttempts Int       @default(3) @map("max_attempts")
+  error       String?
+  processedAt DateTime? @map("processed_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  @@index([status, createdAt])
+  @@map("queue_jobs")
+}

@@ -39,3 +39,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# prisma
+# Ignore migration contents but keep the directory. Note the trailing `/*`:
+# ignoring `prisma/migrations/` wholesale would also exclude .gitkeep, and Git
+# cannot re-include a file whose parent directory is excluded.
+prisma/migrations/*
+!prisma/migrations/.gitkeep
+# generated Prisma Client (Prisma v7 writes it into the source tree)
+/src/generated/
+
+# storage (runtime uploads are private & ignored; seed media is versioned)
+/storage/*
+!/storage/seed-media/
+
+# uploaded files (local storage variant)
+/public/uploads/

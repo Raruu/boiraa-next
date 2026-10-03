@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  /* Native Node packages must not be bundled by the server compiler. */
+  serverExternalPackages: ["bullmq", "ioredis", "nodemailer"],
+  images: {
+    remotePatterns: [],
+  },
 };
 
 export default nextConfig;
