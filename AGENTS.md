@@ -27,7 +27,8 @@ documented decisions stay stable and auditable.
 | `AGENTS.md` (this file, outside the managed block) | User-approval required |
 | `.agents/rules/*.md` | User-approval required |
 | `.agents/skills/*/SKILL.md` + references | User-approval required |
-| `MEMORY.md` | Writeable — append/update freely; don't delete history |
+| `MEMORY.md` (index) | Writeable — append & prune lines freely |
+| `.agents/memory/*.md` (full entries) | Writeable — append & prune freely |
 | `README.md`, `.env.example` | Update freely when the change is factual |
 
 **Rules:**
@@ -49,12 +50,14 @@ documented decisions stay stable and auditable.
    doc rewrite into a feature commit without calling it out explicitly.
 6. **The `nextjs-agent-rules` block above is managed by Next.js.** Don't fight
    it; leave it in place. Edit content outside the markers only.
-7. **`MEMORY.md` is the only freely-writeable instruction file.** Append
-   decisions and update existing entries without asking. Never delete entries
-   or rewrite the file wholesale — memory is append-mostly.
-8. **Never use `MEMORY.md` to bypass approval.** A new convention is a rule,
-   and rules go in `.agents/rules/` with approval. Recording a rule in
-   `MEMORY.md` to avoid asking is a violation of this section.
+7. **`MEMORY.md` and `.agents/memory/*.md` are the only freely-writeable
+   instruction files.** Append and update without asking. Keep the index under
+   ~3 KB: prune lines that are stale, superseded, or no longer true — git
+   history is the archive. A wrong entry is worse than no entry.
+8. **Never use memory to bypass approval.** A new convention is a rule, and
+   rules go in `.agents/rules/` with approval. Recording a rule in memory to
+   avoid asking is a violation of this section. (Constraints *derived from* a
+   recorded decision are fine — see "Memory" below.)
 
 ## Load the right rule file, don't read everything
 
@@ -68,7 +71,8 @@ Read on demand, based on the task at hand:
 | Touch auth, uploads, validation, secrets, or user input | `.agents/rules/security.md` |
 | Commit, push, or run the pre-push checks | `.agents/rules/git-commit.md` |
 | Switch the storage backend | `.agents/skills/s3-to-local-storage/SKILL.md` |
-| Start non-trivial work, or wonder why something is the way it is | `MEMORY.md` |
+| Start non-trivial work, or wonder why something is the way it is | `MEMORY.md` (index) |
+| An index line looks relevant to your task | the linked `.agents/memory/<slug>.md` |
 
 ## Stack (locked versions — see package.json)
 
@@ -118,11 +122,74 @@ npm run db:seed    # prisma db seed
 
 ## Memory
 
-Read `MEMORY.md` for past decisions and context before starting non-trivial
-work — it records why things are the way they are. Append to it when you make
-a decision worth remembering, discover a gotcha, or find that an earlier
-assumption no longer holds. It needs no approval; see the write policy at the
-top of that file.
+Memory is a **working set, not an archive** — git history is the archive. It
+has two parts:
+
+| Part | What it holds | When it is read |
+| --- | --- | --- |
+| `MEMORY.md` | One index line per entry, tagged | Always, before non-trivial work |
+| `.agents/memory/<slug>.md` | The full entry | Only when the index line is relevant |
+
+This split exists so cost scales with *relevance*, not with how much memory
+accumulated. The index stays small enough to read in full every time.
+
+### Index line format
+
+```
+[tag] YYYY-MM-DD — one-line summary → memory/<slug>.md
+```
+
+### Tags
+
+`[env]` machine/environment gotchas · `[db]` database & schema · `[auth]`
+authentication & authorization · `[storage]` file storage · `[build]` tooling,
+dependencies, version pins · `[api]` API contract decisions · `[ui]` design
+system & components · `[deploy]` deployment, infra, CI
+
+Use an existing tag. Add a new one only if it will clearly recur.
+
+### Entry format (`.agents/memory/<slug>.md`)
+
+```markdown
+# Short title
+
+- **Decision:** what was decided.
+- **Why:** the reasoning, including alternatives rejected and why. This is the
+  part that cannot be re-derived by reading the code — spend your words here.
+- **Impact:** what follows from it, including constraints, open questions, and
+  anything you could not verify. "Verified by X, not by Y" is worth writing down.
+```
+
+### Record an entry only if ALL three hold
+
+1. **Not derivable** — reading the code or docs would not reveal it.
+2. **Will recur** — not a one-off event.
+3. **Costly to forget** — wastes real time or breaks something.
+
+### Never record
+
+Anything already in `.agents/rules/`, task progress or TODOs, behaviour that
+is readable from the source, one-off trivia.
+
+### Constraints inside entries are allowed
+
+An entry may carry guidance derived from its decision (e.g. *"do not un-scope
+`.display` — it is prefixed on purpose"*). Splitting a constraint from the
+reasoning that produced it destroys its value. Only rules that must be
+**enforced across the project** get promoted to `.agents/rules/` — and that
+promotion needs approval.
+
+### Pruning
+
+Keep `MEMORY.md` under ~3 KB. When it grows past that: merge duplicates, drop
+the least-recurring entries, delete anything that is no longer true. Prune the
+entry file too when its index line goes.
+
+### Reading mid-task
+
+The index is small enough to read in full at the start. Mid-task, grep it
+rather than re-reading: `grep '^\[env\]' MEMORY.md`. Open the linked entry file
+only when that line bears on what you are doing.
 
 ## Non-negotiables
 

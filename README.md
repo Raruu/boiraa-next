@@ -183,14 +183,16 @@ This repo is set up for AI coding agents:
 | File | Purpose |
 | --- | --- |
 | `AGENTS.md` | Entry point: non-negotiables, stack, working style, and instruction-file protection rules |
-| `MEMORY.md` | Evolving notes & decisions — agent may append and update freely |
+| `MEMORY.md` | Index of project memory — agent may append and prune freely |
+| `.agents/memory/` | Full memory entries, loaded on demand from the index |
 | `.agents/rules/` | Detailed architecture, design system, security, and git standards |
 | `.agents/skills/` | Task skills (currently: S3 → local storage) |
 
 `AGENTS.md`, `.agents/rules/`, and the skill files are protected: agents must
-ask before rewriting them. `MEMORY.md` is the deliberate exception — it exists
-so decisions and gotchas survive across sessions without an approval round
-trip. See "Instruction File Protection" in `AGENTS.md`.
+ask before rewriting them. Memory is the deliberate exception — `MEMORY.md` is
+a capped index and `.agents/memory/` holds the full entries, so decisions and
+gotchas survive across sessions without an approval round trip. See
+"Instruction File Protection" in `AGENTS.md`.
 
 ---
 

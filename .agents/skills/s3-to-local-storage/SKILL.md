@@ -71,16 +71,26 @@ and services that import `uploadFile` / `uploadFiles` / `deleteFile` /
    Then delete `src/lib/s3.ts`. If anything still imports it, the build will
    tell you.
 
-9. **Record the decision in `MEMORY.md`.** This is expected, not optional —
-   append an entry so the reason for the migration survives the session:
-   ```
-   ## [YYYY-MM-DD] Storage moved from S3 to local disk
+9. **Record the decision in memory.** This is expected, not optional — write a
+   full entry so the reason for the migration survives the session.
+
+   Create `.agents/memory/storage-local-disk.md`:
+   ```markdown
+   # Storage moved from S3 to local disk
 
    - **Decision:** Uploads write to `storage/`, served via `/api/files`.
    - **Why:** <the user's reason — cost, no AWS, self-contained deploy, ...>
    - **Impact:** `@aws-sdk/client-s3` removed; `STORAGE_DIR` replaces `AWS_*`.
+     <anything you could not verify, e.g. pre-existing S3 objects are not migrated>
    ```
-   `MEMORY.md` needs no approval — see the write policy at the top of it.
+
+   Then add one index line to `MEMORY.md`:
+   ```
+   [storage] <YYYY-MM-DD> — S3 → local disk: uploads in `storage/`, served via `/api/files` → `memory/storage-local-disk.md`
+   ```
+
+   Both files need no approval — see the write policy at the top of `MEMORY.md`
+   and the "Memory" section of `AGENTS.md`.
 
 10. **Offer to update the rules — do not do it silently.** This migration
     changes documented behavior, so after the code works, ask:
@@ -89,7 +99,7 @@ and services that import `uploadFile` / `uploadFiles` / `deleteFile` /
     > `AGENTS.md` to match?"
 
     Only proceed if the user says yes. Report the doc change as its own diff —
-    separate from the `MEMORY.md` entry, which you already wrote.
+    separate from the memory entry, which you already wrote in step 9.
 
 11. **Verify.**
     ```bash
@@ -109,7 +119,8 @@ and services that import `uploadFile` / `uploadFiles` / `deleteFile` /
   confirms.** They may want to keep S3 as a fallback.
 - **Never edit `.agents/rules/*` or `AGENTS.md` without explicit approval.**
   Offer the update and wait — this is enforced by the protection rules in
-  `AGENTS.md`. `MEMORY.md` is the exception: append to it directly (step 9).
+  `AGENTS.md`. Memory (`MEMORY.md` + `.agents/memory/`) is the exception:
+  write it directly in step 9.
 - **Don't touch callers.** If you find yourself editing routes or services,
   you've changed the interface. Put the compatibility back in `upload.ts`.
 - **Keep the `key` contract.** DB rows store the key (`uploads/...`), never a
