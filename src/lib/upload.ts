@@ -8,9 +8,9 @@ import { s3 } from "@/lib/s3";
  * routes or services. Only the DB `key` is persisted, the public URL is
  * derived on read.
  *
- * NOTE: to move to local disk storage, use the `s3-to-local-storage` skill in
- * `.agents/skills/` — it swaps this module (and adds the /api/files route)
- * without touching callers.
+ * The exported surface is the contract: keep `uploadFile`, `uploadFiles`,
+ * `deleteFile`, `deleteFiles`, and `buildFileUrl` stable so the backend can be
+ * swapped without touching callers.
  */
 
 const BUCKET = process.env.AWS_S3_BUCKET || "";

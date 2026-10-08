@@ -70,7 +70,6 @@ Read on demand, based on the task at hand:
 | Build UI, pick colors, or add a component | `.agents/rules/design-system.md` |
 | Touch auth, uploads, validation, secrets, or user input | `.agents/rules/security.md` |
 | Commit, push, or run the pre-push checks | `.agents/rules/git-commit.md` |
-| Switch the storage backend | `.agents/skills/s3-to-local-storage/SKILL.md` |
 | Start non-trivial work, or wonder why something is the way it is | `MEMORY.md` (index) |
 | An index line looks relevant to your task | the linked `.agents/memory/<slug>.md` |
 

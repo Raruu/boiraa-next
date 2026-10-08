@@ -374,9 +374,6 @@ const where = { ...filterObj, ...searchObj, deletedAt: null };
   `deleteFile`, `deleteFiles`). Never call the S3 client directly.
 - Only the storage `key` is persisted in the database; the URL is derived.
 - `POST /api/upload` and `DELETE /api/upload` are the ready-made endpoints.
-- To switch storage backends (S3 → local disk), use the
-  `s3-to-local-storage` skill in `.agents/skills/` instead of editing
-  callers by hand.
 
 ---
 

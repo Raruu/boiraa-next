@@ -155,14 +155,10 @@ Full component API: `.agents/rules/design-system.md`.
 
 Uploads go through `src/lib/upload.ts`. Today it writes to S3.
 
-To switch to local disk storage (private `storage/` directory served through
-the auth-protected `/api/files` route), follow the skill:
-
-```
-.agents/skills/s3-to-local-storage/SKILL.md
-```
-
-The skill keeps the `upload.ts` interface intact, so no callers change.
+Swapping the backend (for example to a private `storage/` directory served
+through an auth-protected `/api/files` route) only requires reimplementing that
+module — the exported surface (`uploadFile`, `uploadFiles`, `deleteFile`,
+`deleteFiles`, `buildFileUrl`) is the contract, so callers stay untouched.
 
 ---
 
@@ -186,7 +182,7 @@ This repo is set up for AI coding agents:
 | `MEMORY.md` | Index of project memory — agent may append and prune freely |
 | `.agents/memory/` | Full memory entries, loaded on demand from the index |
 | `.agents/rules/` | Detailed architecture, design system, security, and git standards |
-| `.agents/skills/` | Task skills (currently: S3 → local storage) |
+| `.agents/skills/` | Task skills, loaded on demand (currently: `boiraa-setup`) |
 
 `AGENTS.md`, `.agents/rules/`, and the skill files are protected: agents must
 ask before rewriting them. Memory is the deliberate exception — `MEMORY.md` is
