@@ -2,6 +2,7 @@
 
 import { Bell } from "lucide-react";
 import { SidebarToggle } from "./sidebar";
+import { Button } from "@/components/ui/button";
 import { useMe } from "@/hooks/use-auth";
 
 /**
@@ -26,13 +27,15 @@ export function Topbar() {
       {/* Right: Actions */}
       <div className="flex items-center gap-3">
         {/* Notification */}
-        <button
+        <Button
           type="button"
-          className="relative flex h-9 w-9 items-center justify-center rounded-full text-neutral-500 hover:bg-neutral-100 transition-colors"
+          variant="ghost"
+          size="icon"
+          className="rounded-full text-neutral-500"
           aria-label="Notifications"
         >
           <Bell className="h-5 w-5" />
-        </button>
+        </Button>
 
         {/* Avatar */}
         <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-500">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   const router = useRouter();
@@ -16,12 +17,9 @@ export default function NotFound() {
       <p className="mt-2 text-sm text-neutral-500 text-center">
         Halaman yang Anda cari tidak tersedia atau telah dipindahkan.
       </p>
-      <button
-        onClick={() => router.back()}
-        className="mt-6 rounded-lg border border-neutral-300 bg-white px-5 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 transition-colors"
-      >
+      <Button variant="outline" size="lg" className="mt-6" onClick={() => router.back()}>
         Kembali ke Halaman Sebelumnya
-      </button>
+      </Button>
     </div>
   );
 }

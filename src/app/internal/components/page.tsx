@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { Plus } from "lucide-react";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DatePicker } from "@/components/ui/date-picker";
@@ -637,33 +639,32 @@ export default function InternalComponentsPage() {
             </div>
           </div>
 
-          {/* Buttons (showcase tanpa component, pakai native) */}
+          {/* Buttons */}
           <div className="space-y-3">
-            <h3 className="text-lg font-medium text-neutral-800">
-              Button Styles (Tailwind)
-            </h3>
-            <div className="flex flex-wrap gap-3 rounded-xl border border-neutral-200 bg-white p-6">
-              <button className="rounded-lg bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary-600 transition-colors">
-                Primary
-              </button>
-              <button className="rounded-lg bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground hover:bg-primary-100 transition-colors">
-                Secondary
-              </button>
-              <button className="rounded-lg border border-border px-4 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 transition-colors">
-                Outline
-              </button>
-              <button className="rounded-lg bg-destructive px-4 py-2 text-sm font-medium text-destructive-foreground hover:bg-error-700 transition-colors">
-                Destructive
-              </button>
-              <button className="rounded-lg bg-success px-4 py-2 text-sm font-medium text-success-foreground hover:bg-success-600 transition-colors">
-                Success
-              </button>
-              <button className="rounded-lg px-4 py-2 text-sm font-medium text-primary-600 hover:bg-primary-50 transition-colors">
-                Ghost
-              </button>
-              <button className="rounded-lg bg-neutral-200 px-4 py-2 text-sm font-medium text-neutral-500 cursor-not-allowed" disabled>
-                Disabled
-              </button>
+            <h3 className="text-lg font-medium text-neutral-800">Button</h3>
+            <p className="text-sm text-neutral-600">
+              Import:{" "}
+              <code className="bg-neutral-100 px-1 rounded text-xs">
+                import {"{"} Button {"}"} from &quot;@/components/ui/button&quot;
+              </code>
+            </p>
+            <div className="flex flex-wrap items-center gap-3 rounded-xl border border-neutral-200 bg-white p-6">
+              <Button>Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="outline">Outline</Button>
+              <Button variant="ghost">Ghost</Button>
+              <Button variant="destructive">Destructive</Button>
+              <Button variant="success">Success</Button>
+              <Button disabled>Disabled</Button>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 rounded-xl border border-neutral-200 bg-white p-6">
+              <Button size="sm">Small</Button>
+              <Button size="md">Medium</Button>
+              <Button size="lg">Large</Button>
+              <Button size="icon" aria-label="Icon button">
+                <Plus className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </section>

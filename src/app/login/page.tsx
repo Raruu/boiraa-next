@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { useLogin } from "@/hooks/use-auth";
 import { loginSchema, type LoginInput } from "@/server/validators";
 
@@ -88,13 +89,14 @@ function LoginForm() {
             </p>
           )}
 
-          <button
+          <Button
             type="submit"
+            size="lg"
+            className="w-full"
             disabled={login.isPending}
-            className="w-full rounded-lg bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary-600 transition-colors disabled:opacity-60"
           >
             {login.isPending ? "Memproses..." : "Masuk"}
-          </button>
+          </Button>
         </form>
       </div>
     </div>

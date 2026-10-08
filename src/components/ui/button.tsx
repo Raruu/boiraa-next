@@ -13,20 +13,18 @@ type ButtonVariant =
   | "secondary"
   | "outline"
   | "ghost"
-  | "destructive";
+  | "destructive"
+  | "success";
 
 type ButtonSize = "sm" | "md" | "lg" | "icon";
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary:
-    "bg-primary text-primary-foreground hover:bg-primary-600 shadow-sm",
-  secondary:
-    "bg-secondary text-secondary-foreground hover:bg-primary-100",
-  outline:
-    "border border-border bg-white text-neutral-700 hover:bg-neutral-50",
+  primary: "bg-primary text-primary-foreground hover:bg-primary-600",
+  secondary: "bg-secondary text-secondary-foreground hover:bg-primary-100",
+  outline: "border border-border bg-white text-neutral-700 hover:bg-neutral-50",
   ghost: "text-neutral-700 hover:bg-neutral-100",
-  destructive:
-    "bg-destructive text-destructive-foreground hover:bg-error-700 shadow-sm",
+  destructive: "bg-destructive text-destructive-foreground hover:bg-error-700",
+  success: "bg-success text-success-foreground hover:bg-success-600",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

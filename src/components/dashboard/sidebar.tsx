@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Home, Users, Settings, LogOut, Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useLogout } from "@/hooks/use-auth";
 
@@ -109,15 +110,16 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
       {/* Logout */}
       <div className="border-t border-neutral-200 px-3 py-3">
-        <button
+        <Button
           type="button"
+          variant="ghost"
           onClick={handleLogout}
           disabled={logout.isPending}
-          className="flex w-full items-center gap-2.5 rounded-md px-2.5 py-2 text-sm text-neutral-600 hover:bg-neutral-50 hover:text-neutral-900 transition-colors disabled:opacity-60"
+          className="w-full justify-start gap-2.5 rounded-md px-2.5 text-neutral-600 hover:text-neutral-900"
         >
           <LogOut className="h-4 w-4" />
           <span>Keluar</span>
-        </button>
+        </Button>
       </div>
     </>
   );
@@ -127,14 +129,16 @@ function SidebarContent({ onNavigate }: { onNavigate?: () => void }) {
 
 export function SidebarToggle() {
   return (
-    <button
+    <Button
       type="button"
+      variant="ghost"
+      size="icon"
       onClick={() => document.dispatchEvent(new CustomEvent("toggle-sidebar"))}
-      className="flex h-9 w-9 items-center justify-center rounded-md text-neutral-600 hover:bg-neutral-100 transition-colors lg:hidden"
+      className="rounded-md text-neutral-600 lg:hidden"
       aria-label="Toggle menu"
     >
       <Menu className="h-5 w-5" />
-    </button>
+    </Button>
   );
 }
 
@@ -182,14 +186,16 @@ export function Sidebar() {
         )}
       >
         {/* Close button */}
-        <button
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
           onClick={() => setMobileOpen(false)}
-          className="absolute top-4 right-4 flex h-8 w-8 items-center justify-center rounded-md text-neutral-500 hover:bg-neutral-100"
+          className="absolute top-4 right-4 h-8 w-8 rounded-md text-neutral-500"
           aria-label="Close menu"
         >
           <X className="h-5 w-5" />
-        </button>
+        </Button>
         <SidebarContent onNavigate={() => setMobileOpen(false)} />
       </aside>
     </>
