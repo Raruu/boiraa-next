@@ -136,8 +136,11 @@ accumulated. The index stays small enough to read in full every time.
 ### Index line format
 
 ```
-[tag] YYYY-MM-DD — one-line summary → memory/<slug>.md
+[tag] [!] YYYY-MM-DD — one-line summary → memory/<slug>.md
 ```
+
+The `[!]` is optional — see "Pinned entries" below. It sits after the tag so
+`grep '^\[env\]' MEMORY.md` keeps working.
 
 ### Tags
 
@@ -147,6 +150,31 @@ dependencies, version pins · `[api]` API contract decisions · `[ui]` design
 system & components · `[deploy]` deployment, infra, CI
 
 Use an existing tag. Add a new one only if it will clearly recur.
+
+### Pinned entries (`[!]`)
+
+The user may pin an entry by adding `[!]` right after its tag:
+
+    [env] [!] 2026-10-03 — summary → memory/next-server-collision.md
+
+A pin means two things and only two:
+
+1. **Priority in pruning.** Pinned entries are the last resort — see "Pruning".
+2. **Flagged in audit reports.** `memory-purge` marks them so the user sees
+   them while deciding.
+
+A pin does **not** mean:
+
+- **Always loaded.** The index is read in full; entry files stay on demand. A
+  pin does not change read cost.
+- **Immune to being wrong.** A pinned entry that is stale or contradicted is
+  still reported, and may still be deleted. The pin is a preference to keep,
+  not a claim that the entry is correct.
+
+**Only the user sets a pin.** An agent adds one only on an explicit request,
+never on its own initiative. If most entries end up pinned the marker has
+stopped discriminating — that is a signal to promote the ones that are really
+rules into `.agents/rules/`.
 
 ### Entry format (`.agents/memory/<slug>.md`)
 
@@ -185,9 +213,15 @@ Keep `MEMORY.md` at or under **7168 bytes** — the single source of truth for
 the cap. Check it with `wc -c MEMORY.md`. Every other mention of the cap points
 here; never restate the number elsewhere.
 
-When it grows past that: merge duplicates, drop the least-recurring entries,
-delete anything that is no longer true. Prune the entry file too when its index
-line goes.
+When it grows past that, prefer in this order:
+
+1. entries that are no longer true
+2. duplicates to merge
+3. least-recurring unpinned entries
+4. `[!]` entries — last resort
+
+If a pinned entry reaches step 4, say so explicitly rather than dropping it
+quietly. Prune the entry file too when its index line goes.
 
 ### Reading mid-task
 

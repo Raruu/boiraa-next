@@ -5,4 +5,4 @@
 
 ---
 
-[env] 2026-10-03 — a second `next-server` (unrelated app) shares this machine; `pkill -f next` kills it too → `memory/next-server-collision.md`
+[env] [!] 2026-10-03 — a second `next-server` (unrelated app) shares this machine; `pkill -f next` kills it too → `memory/next-server-collision.md`

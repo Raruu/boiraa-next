@@ -66,6 +66,7 @@ an index line is a summary and hides the details that contradict.
 | **Inclusion violation** | Entry fails one of the three conditions in `AGENTS.md` → "Memory" | Delete it |
 | **Format drift** | Index line missing its `[tag]`, date, or arrow link | Rewrite the line in the documented format |
 | **Unknown tag** | Tag is outside the eight in `AGENTS.md` | Retag, unless it clearly recurs and deserves promotion |
+| **Pin overload** | Most entries are pinned, so the marker no longer discriminates | Review whether some belong in `.agents/rules/` |
 
 The three inclusion conditions, for reference: **not derivable** from reading
 the code or docs, **will recur**, and **costly to forget**. An entry that fails
@@ -140,6 +141,11 @@ In **audit** mode, add a closing offer:
 
 > Want me to deep-search any of these against the code before deciding?
 
+Mark pinned entries (`[!]`) in the tables so the user sees which ones they
+flagged. A finding that would remove a pinned entry is still reported — the pin
+is a preference to keep, not a claim the entry is correct — but call it out
+explicitly rather than burying it in a list.
+
 ## 6. Apply
 
 Ask for a batch selection rather than one prompt per finding:
@@ -170,4 +176,6 @@ line. Report the memory changes as a single diff.
 - **Never invent findings.** A clean audit is a valid result.
 - **Report memory changes as one diff** — index and entry files together, since
   they must stay in sync.
+- **Never add `[!]` on your own initiative.** Only the user pins entries, or an
+  agent acting on their explicit request.
 - **Run only when asked.** The description gates this; honor it.
