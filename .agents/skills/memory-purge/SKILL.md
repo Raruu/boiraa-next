@@ -21,7 +21,7 @@ deletes only on an explicit instruction.
 
 - "Purge memory" / "audit memory" / "check memory" / "clean up memory"
 - After a large refactor, to find entries that no longer match the code
-- When `MEMORY.md` is approaching its ~3 KB cap
+- When `MEMORY.md` is approaching the cap declared in `AGENTS.md`
 
 ## When NOT to use me
 
@@ -51,6 +51,9 @@ cat MEMORY.md
 ls .agents/memory/
 ```
 
+Read the cap from `AGENTS.md` → "Memory" → "Pruning". Use that value throughout
+the report and the verification step — never assume a default.
+
 Read every entry file in full. You need the complete text to judge conflicts —
 an index line is a summary and hides the details that contradict.
 
@@ -60,7 +63,7 @@ an index line is a summary and hides the details that contradict.
 | --- | --- | --- |
 | **Dangling** | An index line points at `memory/<slug>.md` that does not exist | Delete the line, or write the missing entry |
 | **Orphan** | An entry file exists with no index line pointing at it | Add the line, or delete the file |
-| **Cap breach** | `MEMORY.md` is over ~3 KB (`wc -c MEMORY.md`) | Merge duplicates, prune the least-recurring lines |
+| **Cap breach** | `MEMORY.md` is over the cap (`wc -c MEMORY.md` vs `AGENTS.md` → Pruning) | Merge duplicates, prune the least-recurring lines |
 | **Inclusion violation** | Entry fails one of the three conditions in `AGENTS.md` → "Memory" | Delete it |
 | **Format drift** | Index line missing its `[tag]`, date, or arrow link | Rewrite the line in the documented format |
 | **Unknown tag** | Tag is outside the eight in `AGENTS.md` | Retag, unless it clearly recurs and deserves promotion |
@@ -116,7 +119,7 @@ One table, findings numbered. If the audit is clean, say so plainly and stop —
 do not manufacture findings to look useful.
 
 ```
-## Memory audit — <N> entries, <X> B index (cap ~3 KB)
+## Memory audit — <N> entries, <X> B index (cap <CAP> B)
 
 ### Structural
 | # | Type | Item | Finding | Options |
@@ -149,7 +152,7 @@ Then apply exactly what was selected. Anything not selected stays untouched.
 ## 7. Verify
 
 ```bash
-wc -c MEMORY.md          # under ~3 KB
+wc -c MEMORY.md          # under <CAP> B from AGENTS.md
 ls .agents/memory/       # index and files agree
 ```
 

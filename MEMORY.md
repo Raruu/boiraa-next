@@ -1,8 +1,7 @@
 # MEMORY.md
 
-> Index of project memory — one line per entry. Full entries in
-> `.agents/memory/`. Append freely, prune stale lines, keep it under ~3 KB.
-> Rules belong in `.agents/rules/`, never here. Protocol: `AGENTS.md` → "Memory".
+> Index of project memory. Full entries in `.agents/memory/`.
+> Writeable. Cap and protocol: `AGENTS.md` → "Memory".
 
 ---
 

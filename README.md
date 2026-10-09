@@ -186,9 +186,10 @@ This repo is set up for AI coding agents:
 
 `AGENTS.md`, `.agents/rules/`, and the skill files are protected: agents must
 ask before rewriting them. Memory is the deliberate exception — `MEMORY.md` is
-a capped index and `.agents/memory/` holds the full entries, so decisions and
-gotchas survive across sessions without an approval round trip. See
-"Instruction File Protection" in `AGENTS.md`.
+a capped index (the cap lives in `AGENTS.md` → "Memory" → "Pruning") and
+`.agents/memory/` holds the full entries, so decisions and gotchas survive
+across sessions without an approval round trip. See "Instruction File
+Protection" in `AGENTS.md`.
 
 ---
 

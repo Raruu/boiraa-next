@@ -51,9 +51,10 @@ documented decisions stay stable and auditable.
 6. **The `nextjs-agent-rules` block above is managed by Next.js.** Don't fight
    it; leave it in place. Edit content outside the markers only.
 7. **`MEMORY.md` and `.agents/memory/*.md` are the only freely-writeable
-   instruction files.** Append and update without asking. Keep the index under
-   ~3 KB: prune lines that are stale, superseded, or no longer true — git
-   history is the archive. A wrong entry is worse than no entry.
+   instruction files.** Append and update without asking. Keep the index within
+   the cap in "Pruning" below: prune lines that are stale, superseded, or no
+   longer true — git history is the archive. A wrong entry is worse than no
+   entry.
 8. **Never use memory to bypass approval.** A new convention is a rule, and
    rules go in `.agents/rules/` with approval. Recording a rule in memory to
    avoid asking is a violation of this section. (Constraints *derived from* a
@@ -180,9 +181,13 @@ promotion needs approval.
 
 ### Pruning
 
-Keep `MEMORY.md` under ~3 KB. When it grows past that: merge duplicates, drop
-the least-recurring entries, delete anything that is no longer true. Prune the
-entry file too when its index line goes.
+Keep `MEMORY.md` at or under **7168 bytes** — the single source of truth for
+the cap. Check it with `wc -c MEMORY.md`. Every other mention of the cap points
+here; never restate the number elsewhere.
+
+When it grows past that: merge duplicates, drop the least-recurring entries,
+delete anything that is no longer true. Prune the entry file too when its index
+line goes.
 
 ### Reading mid-task
 
