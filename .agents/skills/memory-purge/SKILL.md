@@ -21,7 +21,6 @@ deletes only on an explicit instruction.
 
 - "Purge memory" / "audit memory" / "check memory" / "clean up memory"
 - After a large refactor, to find entries that no longer match the code
-- When `MEMORY.md` is approaching the cap declared in `AGENTS.md`
 
 ## When NOT to use me
 
