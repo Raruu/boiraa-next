@@ -182,7 +182,7 @@ This repo is set up for AI coding agents:
 | `MEMORY.md` | Index of project memory — agent may append and prune freely |
 | `.agents/memory/` | Full memory entries, loaded on demand from the index |
 | `.agents/rules/` | Detailed architecture, design system, security, and git standards |
-| `.agents/skills/` | Task skills, loaded on demand (currently: `boiraa-setup`) |
+| `.agents/skills/` | Task skills, loaded on demand from their descriptions |
 
 `AGENTS.md`, `.agents/rules/`, and the skill files are protected: agents must
 ask before rewriting them. Memory is the deliberate exception — `MEMORY.md` is
